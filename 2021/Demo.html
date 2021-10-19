@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .parent {
+      display: flex;
+      height: 200px;
+      width: 1000px;
+      background-color: pink;
+    }
+
+    .a {
+      width: 100px;
+      flex: 1;
+      background-color: skyblue;
+    }
+
+    .b {
+      width: 100px;
+      flex: 2;
+      background-color: yellow;
+    }
+
+    /* 红绿灯 */
+    #l {
+      width: 100px;
+      height: 100px;
+      /* background-color: blueviolet; */
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="parent">
+    <div class="a"></div>
+    <div class="b"></div>
+  </div>
+
+  <!-- 红绿灯  -->
+  <div id="l"></div>
+
+
+  <script>
+    // function red() {
+    //   // console.log("red");
+    //   l.style.background = "red"
+
+    // }
+    // function green() {
+    //   // console.log("green");
+    //   l.style.background = "green"
+    // }
+    // function yellow() {
+    //   // console.log("yellow");
+    //   l.style.background = "yellow"
+
+    // }
+    // var light = function (cb, timer) {
+    //   return new Promise((resolve, reject) => {
+    //     setTimeout(function () {
+    //       cb();
+    //       resolve();
+    //     }, timer)
+    //   })
+    // }
+
+    // var run = function () {
+    //   Promise.resolve().then(function () {
+    //     return light(red, 6000);
+    //   }).then(function () {
+    //     return light(green, 3000);
+    //   }).then(function () {
+    //     return light(yellow, 1000);
+    //   }).then(function () {
+    //     run();
+    //   })
+    // }
+    // run();
+
+
+    function redToYellowToGreen() {
+      function light(color) {
+        l.style.background = color
+      }
+
+      function lightDelay(color, delay) {
+        return new Promise((resolve) => {
+          let timer = setTimeout(() => {
+            light(color)
+            resolve(timer)
+          }, delay)
+        })
+      }
+
+      async function oneCycle() {
+        const timer1 = await lightDelay('red', 3000)
+        const timer2 = await lightDelay('yellow', 2000)
+        const timer3 = await lightDelay('green', 1000)
+        clearTimeout(timer1)
+        clearTimeout(timer2)
+        clearTimeout(timer3)
+      }
+
+      setInterval(() => {
+        oneCycle()
+      }, 6000)
+    }
+
+    redToYellowToGreen()
+
+
+
+  </script>
+
+  <script>
+    const test = [
+      "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1nm78ij20xc035q31.jpg",
+      "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1nuzkxj20xc035mxh.jpg",
+      "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1o0dgej20xc035dg6.jpg",
+      "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1o8nivj20xc03574r.jpg",
+      "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1ov4dcj20xc035q3f.jpg",
+      "https://wx4.sinaimg.cn/large/9b7f515dly8gu3k1p1huoj20xc035jrr.jpg",
+      "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1q299vj20xc0353yw.jpg",
+      "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1q91zyj20xc035t95.jpg",
+      "https://wx4.sinaimg.cn/large/9b7f515dly8gu3k1qhe25j20xc035q3b.jpg",
+      "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1qlx3bj20xc035mxh.jpg",
+      "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1qrjsdj20xc035t91.jpg",
+      "https://wx4.sinaimg.cn/large/9b7f515dly8gu3k1qxtsej20xc035jrq.jpg",
+      "https://wx1.sinaimg.cn/large/9b7f515dly8gu3k1r8n9nj20xc0353yx.jpg",
+      "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1rdabdj20xc035wev.jpg",
+      "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1rkcxvj20xc0383yv.jpg"
+    ]
+  </script>
+</body>
+
+</html>
