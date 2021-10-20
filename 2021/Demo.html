@@ -1,130 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html,
+      body,
+      ul,
+      li {
+        padding: 0;
+        margin: 0;
+        border: 0;
+      }
+      ul {
+        width: 900px;
+        overflow: hidden;
+        margin-top: 4px;
+        font-size: 12px;
+        line-height: 36px;
+      }
+      li {
+        float: left;
+        width: 90px;
+        margin: 04px;
+        display: inline-block;
+        text-align: center;
+        border: 1pxsolid#333;
+        background: yellowgreen;
+      }
+    </style>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
+  <body>
+    <script>
+      for (var i = 1; i <= 9; i++) {
+        var myUl = document.createElement("ul");
+        for (var j = 1; j <= i; j++) {
+          var myLi = document.createElement("li");
+          var myText = document.createTextNode(j + " × " + i + " = " + i * j);
+          myLi.appendChild(myText);
+          myUl.appendChild(myLi);
+        }
+        document.getElementsByTagName("body")[0].appendChild(myUl);
+      }
+    </script>
 
-    body {
-      text-align: center;
-      font-size: 14px;
-      color: gray;
-    }
-
-    .yellow {
-      background: goldenrod;
-    }
-
-    .blue {
-      background: darkblue;
-    }
-
-    .contain {
-      padding: 3px;
-    }
-
-    /* 使其居中 */
-
-    .contain {
-      position: absolute;
-      top: 50%;
-      margin-top: -300px;
-      left: 50%;
-      margin-left: -300px;
-    }
-
-    /* 使其内部居中 */
-
-    .contain {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      align-items: center;
-      align-content: space-around;
-    }
-
-    /* 设置大小 */
-
-    .contain {
-      width: 500px;
-      height: 500px;
-    }
-
-    .contain div {
-      border: 1px solid #808080;
-    }
-
-    .item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .item>span {
-      /* background: #808080; */
-    }
-
-    .item {
-      background: goldenrod;
-      width: 32%;
-      height: 32%;
-    }
-  </style>
-</head>
-
-<body>
-  <div id="contain" class="contain blue">
-    <div class="item "><span>1</span>
-    </div>
-    <div class="item "><span>2</span>
-    </div>
-    <div class="item "><span>3</span>
-    </div>
-    <div class="item "><span>4</span>
-    </div>
-    <div class="item "><span>5</span>
-    </div>
-    <div class="item "><span>6</span>
-    </div>
-    <div class="item "><span>7</span>
-    </div>
-    <div class="item "><span>8</span>
-    </div>
-    <div class="item "><span>9</span>
-    </div>
-  </div>
-
-  <script>
-
-
-  </script>
-
-  <script>
-    const test = [
-      "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1nm78ij20xc035q31.jpg",
-      "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1nuzkxj20xc035mxh.jpg",
-      "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1o0dgej20xc035dg6.jpg",
-      "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1o8nivj20xc03574r.jpg",
-      "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1ov4dcj20xc035q3f.jpg",
-      "https://wx4.sinaimg.cn/large/9b7f515dly8gu3k1p1huoj20xc035jrr.jpg",
-      "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1q299vj20xc0353yw.jpg",
-      "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1q91zyj20xc035t95.jpg",
-      "https://wx4.sinaimg.cn/large/9b7f515dly8gu3k1qhe25j20xc035q3b.jpg",
-      "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1qlx3bj20xc035mxh.jpg",
-      "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1qrjsdj20xc035t91.jpg",
-      "https://wx4.sinaimg.cn/large/9b7f515dly8gu3k1qxtsej20xc035jrq.jpg",
-      "https://wx1.sinaimg.cn/large/9b7f515dly8gu3k1r8n9nj20xc0353yx.jpg",
-      "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1rdabdj20xc035wev.jpg",
-      "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1rkcxvj20xc0383yv.jpg"
-    ]
-  </script>
-</body>
-
+    <script>
+      const test = [
+        "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1nm78ij20xc035q31.jpg",
+        "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1nuzkxj20xc035mxh.jpg",
+        "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1o0dgej20xc035dg6.jpg",
+        "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1o8nivj20xc03574r.jpg",
+        "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1ov4dcj20xc035q3f.jpg",
+        "https://wx4.sinaimg.cn/large/9b7f515dly8gu3k1p1huoj20xc035jrr.jpg",
+        "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1q299vj20xc0353yw.jpg",
+        "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1q91zyj20xc035t95.jpg",
+        "https://wx4.sinaimg.cn/large/9b7f515dly8gu3k1qhe25j20xc035q3b.jpg",
+        "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1qlx3bj20xc035mxh.jpg",
+        "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1qrjsdj20xc035t91.jpg",
+        "https://wx4.sinaimg.cn/large/9b7f515dly8gu3k1qxtsej20xc035jrq.jpg",
+        "https://wx1.sinaimg.cn/large/9b7f515dly8gu3k1r8n9nj20xc0353yx.jpg",
+        "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1rdabdj20xc035wev.jpg",
+        "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1rkcxvj20xc0383yv.jpg",
+      ];
+    </script>
+  </body>
 </html>
