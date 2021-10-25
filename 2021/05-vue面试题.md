@@ -150,9 +150,9 @@ patchVnode是diff发生的地方，整体策略：深度优先，同层比较
 
         * 虚拟DOM重写（编译时提示减少运行时开销，使用更有效的代码创建虚拟节点。组件快速路径+单个调用+子节点类型检查。跳过不必要的条件分支。js引擎更容易优化）
         * 优化slots的生成（vue3中可以单独重新渲染父级和子级。确保实例正确的跟踪依赖关系。避免不必要的父子组件重新渲染）
-        * 静态树提升（内存换时间，）
-        * 静态属性提升 
-        * 基于Proxy的响应式系统
+        * 静态树提升（内存换时间，Vue3 的编译器将能够检测到什么是静态的，然后将其提升，从而降低了渲染成本。跳过修补整棵树，从而降低渲染成本。即使多次出现也能正常工作 ）
+        * 静态属性提升 （Vue3 打补丁时将跳过这些属性不会改变的节点）
+        * 基于Proxy的响应式系统 （组件实例初始化的速度提高100％ 。使用Proxy节省以前一半的内存开销，加快速度，但是存在低浏览器版本的不兼容。为了继续支持IE11，Vue3 将发布一个支持旧观察者机制和新 Proxy 版本的构建）
 
     2、更小
 
@@ -160,7 +160,7 @@ patchVnode是diff发生的地方，整体策略：深度优先，同层比较
 
     3、更容易维护
 
-        * TS+模块化
+        * TS+模块化 （它不仅会使用 TypeScript，而且许多包被解耦，更加模块化。）
 
     4、更加友好
 
@@ -175,15 +175,20 @@ patchVnode是diff发生的地方，整体策略：深度优先，同层比较
 
 ## 10、vuex使用及理解
 
-    1、
+    1、state （...mapState可获取，mutate）
 
-    2、
+    2、getter （getter理解为计算属性）
 
-    3、
+    3、mutation （更改vuex的state中唯一的方式，必须是同步函数，commit）
 
-    4、
+    4、action （dispatch、ajax）
 
-    5、
+        * action提交的mutation，不是直接修改状态 
+        * action可以包含异步操作，而mutation不行 
+        * action中的回调函数第一个参数是context，是一个与store实例具有相同属性的方法的对象 
+        * action通过store.dispatch触发，mutation通过store.commit提交
+
+    5、module （vuex允许我们将store分割成模块）
 
 ## 11、vue中组件之间的通信方式？
 
@@ -205,11 +210,167 @@ patchVnode是diff发生的地方，整体策略：深度优先，同层比较
 
 ## 12、vue-router中如何保护指定路由的安全？
 
-    1、
+    1、全局的钩子函数
+        
+        * beforeEach(to，from，next) 路由改变前调用。常用验证用户权限。to ：即将要进入的目标路由对象。from：当前正要离开的路由对象。next：路由控制参数。next()：如果一切正常，则调用这个方法进入下一个钩子。next(false)：取消导航（即路由不发生改变）。next('/login')：当前导航被中断，然后进行一个新的导航。next(error)：如果一个Error实例，则导航会被终止且该错误会被传递给router.onError()
+  
+        * afterEach (to，from) 路由改变后的钩子。常用自动让页面返回最顶端。用法相似，少了next参数。
+
+    2、路由配置中的导航钩子
+
+        * beforeEnter (to，from，next) 
+
+    3、组件内的钩子函数
+
+        * beforeRouteEnter(to,from,next)。该组件的对应路由被comfirm前调用。 此时实例还没被创建，所以不能获取实例（this） 
+
+        * beforeRouteUpdate(to,from,next)。当前路由改变，当该组件被复用时候调用。该函数内可以访问组件实例(this)。举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。 
+
+        * beforeRouteLeave(to,from,next)。当导航离开组件的对应路由时调用。 该函数内可以访问获取组件实例（this）
+  
+    4、路由监测变化（使用watch 来对$route 监听）
+
+        * 监听到路由对象发生变化，从而对路由变化做出响应 
 
 ## 13、你知道nextTick吗？它是干什么的？实现原理是什么？
 
-    1、
+    1、 vue用异步队列的方式来控制DOM更新和nextTick回调先后执行 
+
+    2、 microtask因为其高优先级特性，能确保队列中的微任务在一次事件循环前被执行完毕 
+
+    3、 因为兼容性问题，vue不得不做了microtask向macrotask的降级方案 
 
 ## 14、谈一谈你对vue响应式原理的理解？
 
+    1、object.defineProperty
+
+    2、proxy(兼容性不太好)
+
+observer类
+
+```js
+/* observer 类会附加到每一个被侦测的object上 
+* 一旦被附加上，observer会被object的所有属性转换为getter/setter的形式 
+* 当属性发生变化时候及时通知依赖 
+*/
+// Observer 实例 
+export class Observer {
+  constructor(value) {
+    this.value = value
+    if (!Array.isArray(value)) { // 判断是否是数组 
+      this.walk(value) // 劫持对象 
+    }
+  }
+  walk(obj) { 
+    // 将会每一个属性转换为getter/setter 形式来侦测数据变化
+    const keys = Object.keys(obj) 
+    for (let i = 0; i < keys.length; i++) {
+      defineReactive(obj, keys[i], obj[key[i]]) // 数据劫持方法 
+    }
+  }
+}
+
+function defineReactive(data, key, val) {
+  // 递归属性 
+  if (typeof val === 'object') {
+    new Observer(val)
+  }
+  let dep = new Dep()
+  Object.defineProperty(data, key, {
+    enumerable: true,
+    configurable: true,
+    get: function () {
+      dep.depend()
+      return val
+    },
+    set: function (newVal) {
+      if (val === newVal) {
+        return
+      }
+      val = newVal
+      dep.notify()
+    }
+  })
+}
+```
+
+Dep 依赖收集
+
+```js
+export default class Dep {
+  constructor() {
+    this.subs = [] // 观察者集合 
+  }
+  // 添加观察者 
+  addSub(sub) {
+    this.subs.push(sub)
+  }
+  // 移除观察者 
+  removeSub(sub) {
+    remove(this.subs, sub)
+  }
+  depend() {
+    // 核心，如果存在 ，则进行依赖收集操作     
+    if (window.target) {
+      this.addDep(window.target)
+    }
+  }
+  notify() {
+    const subs = this.subs.slice() // 避免污染原来的集合 
+    // 如果不是异步执行，先进行排序，保证观察者执行顺序 
+    if (process.env.NODE_ENV !== 'production' && !config.async) {
+      subs.sort((a, b) => a.id - b.id)
+    }
+    for (let i = 0, l = subs.length; i < l; i++) {
+      subs[i].update() // 发布执行 
+    }
+  }
+}
+function remove(arr, item) {
+  if (arr.length) {
+    const index = arr.indexOf(item)
+    if (index > -1) {
+      return arr.splice(index, 1)
+    }
+  }
+}
+```
+
+watcher
+
+```js
+export default class Watcher {
+  constructor(vm, expOrFn, cb) {
+    // 组件实例对象  
+    // 要观察的表达式，函数，或者字符串，只要能触发取值操作 
+    // 被观察者发生变化后的回调 
+    this.vm = vm // Watcher有一个 vm 属性，表明它是属于哪个组件的       
+    // 执行this.getter()及时读取数据 
+    this.getter = parsePath(expOrFn)
+    this.cb = cb
+    this.value = this.get()
+  }
+  get() {
+    window.target = this
+    let value = this.getter.call(this.vm, this.vm)
+    window.target = undefined
+    return value
+  }
+  update() {
+    const oldValue = this.value
+    this.value = this.get()
+    this.cb.call(this.vm, this.value, oldValue)
+  }
+}
+```
+
+    * data通过Observer转换成了getter/setter的形式来追踪变化 
+    * 当外界通过Watcher读取数据时，会触发getter从而将watcher添加到依赖中 
+    * 当数据变化时，会触发setter从而向Dep中的依赖（watcher）发送通知 
+    * watcher接收通知后，会向外界发送通知，变化通知到外界后可能会触发视图更新，也有可能触发用户的某个回调函数等 
+
+## 15、vue为什么要求组件模版只能有一个根元素?
+
+    1、 new Vue({el:'#app'}) 
+    2、 单文件组件中，template下的元素div。其实就是"树"状数据结构中的"根"。 
+    3、 diff算法要求的，源码中，patch.js里patchVnode()。
