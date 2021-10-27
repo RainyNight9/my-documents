@@ -1,0 +1,19 @@
+name: tencent-fullstack-vue-application
+
+dashboard:
+  component: '@serverless/tencent-website'
+  inputs:
+    code:
+      src: dist
+      root: front
+      hook: npm run build
+    env:
+      apiUrl: ${api.url}
+api:
+  component: '@serverless/tencent-express'
+  inputs:
+    code: ./api
+    functionName: tencent-fullstack-vue-api
+    apigatewayConf:
+      protocols:
+        - https

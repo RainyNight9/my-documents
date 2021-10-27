@@ -1,0 +1,18 @@
+{
+	"id": "index.html",
+	"dependencies": [
+		{
+			"name": "./app.js",
+			"dynamic": true,
+			"resolved": "C:\\Users\\JiaJia\\Desktop\\webpackinterview\\webpackinterview\\5.parceljs\\src\\app.js",
+			"parent": "C:\\Users\\JiaJia\\Desktop\\webpackinterview\\webpackinterview\\5.parceljs\\src\\index.html"
+		}
+	],
+	"generated": {
+		"html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Document</title>\n</head>\n<body>\n    hello\n    <script src=\"/0364f57fbff2fabbe941ed20c328ef1a.js\"></script>\n</body>\n</html>"
+	},
+	"sourceMaps": null,
+	"error": null,
+	"hash": "46c5253ad3285ad3246903a0f5149364",
+	"cacheData": {}
+}

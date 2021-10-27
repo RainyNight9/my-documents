@@ -1,0 +1,22 @@
+{
+  "protocols": [
+    "http"
+  ],
+  "subDomain": "service-ik4dawdj-1258145019.bj.apigw.tencentcs.com",
+  "environment": "release",
+  "region": "ap-beijing",
+  "service": {
+    "value": "service-ik4dawdj",
+    "created": true
+  },
+  "apis": [
+    {
+      "path": "/users",
+      "method": "GET",
+      "apiId": {
+        "value": "api-0t5dsc96",
+        "created": true
+      }
+    }
+  ]
+}

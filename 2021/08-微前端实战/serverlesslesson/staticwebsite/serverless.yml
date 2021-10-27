@@ -1,0 +1,12 @@
+component: website
+name: websitedemo 
+org: zhufeng 
+app: zhufengApp
+stage: dev
+
+inputs:
+  code:
+    src: ./code
+    index: index.html
+    error: error.html  
+  region: ap-beijing

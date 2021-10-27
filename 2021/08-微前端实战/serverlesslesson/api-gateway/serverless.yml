@@ -1,0 +1,12 @@
+restApi:
+    component: "@serverless/tencent-apigateway"
+    inputs:
+      region: ap-beijing
+      protocol: http
+      serviceName: serverlessgateway
+      environment: release
+      endpoints:
+        - path: /users
+          method: GET
+          function:
+            functionName: scfFunctionName

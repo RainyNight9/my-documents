@@ -1,0 +1,148 @@
+{
+	"id": "app.js",
+	"dependencies": [
+		{
+			"name": "C:\\Users\\JiaJia\\Desktop\\webpackinterview\\webpackinterview\\5.parceljs\\package.json",
+			"includedInParent": true,
+			"mtime": 1598975572000
+		}
+	],
+	"generated": {
+		"js": "var sum = function sum(a, b) {\n  return a + b;\n};\n\nconsole.log(sum);"
+	},
+	"sourceMaps": {
+		"js": {
+			"mappings": [
+				{
+					"generated": { "line": 1, "column": 0 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 0 }
+				},
+				{
+					"name": "sum",
+					"generated": { "line": 1, "column": 4 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 4 }
+				},
+				{
+					"generated": { "line": 1, "column": 7 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 7 }
+				},
+				{
+					"generated": { "line": 1, "column": 10 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 10 }
+				},
+				{
+					"name": "sum",
+					"generated": { "line": 1, "column": 19 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 4 }
+				},
+				{
+					"generated": { "line": 1, "column": 22 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 10 }
+				},
+				{
+					"name": "a",
+					"generated": { "line": 1, "column": 23 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 11 }
+				},
+				{
+					"generated": { "line": 1, "column": 24 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 10 }
+				},
+				{
+					"name": "b",
+					"generated": { "line": 1, "column": 26 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 13 }
+				},
+				{
+					"generated": { "line": 1, "column": 27 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 10 }
+				},
+				{
+					"generated": { "line": 2, "column": 0 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 10 }
+				},
+				{
+					"name": "a",
+					"generated": { "line": 2, "column": 9 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 17 }
+				},
+				{
+					"generated": { "line": 2, "column": 10 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 18 }
+				},
+				{
+					"name": "b",
+					"generated": { "line": 2, "column": 13 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 19 }
+				},
+				{
+					"generated": { "line": 2, "column": 14 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 10 }
+				},
+				{
+					"generated": { "line": 3, "column": 0 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 10 }
+				},
+				{
+					"generated": { "line": 3, "column": 1 },
+					"source": "app.js",
+					"original": { "line": 2, "column": 0 }
+				},
+				{
+					"name": "console",
+					"generated": { "line": 5, "column": 0 },
+					"source": "app.js",
+					"original": { "line": 3, "column": 0 }
+				},
+				{
+					"generated": { "line": 5, "column": 7 },
+					"source": "app.js",
+					"original": { "line": 3, "column": 7 }
+				},
+				{
+					"name": "log",
+					"generated": { "line": 5, "column": 8 },
+					"source": "app.js",
+					"original": { "line": 3, "column": 8 }
+				},
+				{
+					"generated": { "line": 5, "column": 11 },
+					"source": "app.js",
+					"original": { "line": 3, "column": 0 }
+				},
+				{
+					"name": "sum",
+					"generated": { "line": 5, "column": 12 },
+					"source": "app.js",
+					"original": { "line": 3, "column": 12 }
+				},
+				{
+					"generated": { "line": 5, "column": 15 },
+					"source": "app.js",
+					"original": { "line": 3, "column": 0 }
+				}
+			],
+			"sources": { "app.js": "\nlet sum = (a,b)=>a+b;\nconsole.log(sum);" },
+			"lineCount": null
+		}
+	},
+	"error": null,
+	"hash": "5cfb08dee57b34d2bc6ade8b244e6775",
+	"cacheData": { "env": {} }
+}

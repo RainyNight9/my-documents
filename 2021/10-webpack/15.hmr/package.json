@@ -1,0 +1,25 @@
+{
+  "name": "15.hmr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.17.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "html-webpack-plugin": "^4.4.1",
+    "mime": "^2.4.6",
+    "socket.io": "^2.3.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
