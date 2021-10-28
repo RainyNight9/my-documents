@@ -29,10 +29,26 @@
         border: 1pxsolid#333;
         background: yellowgreen;
       }
+      .pos{
+        width: 300px;
+        height: 300px;
+        background-color: red;
+        border: 2px solid blue;
+        position: absolute;
+        bottom: 0;
+        display: none;
+      }
+      body{
+        height: 2000px;
+      }
     </style>
   </head>
 
   <body>
+    <div class="pos">
+      dsdsadd
+    </div>
+
     <script>
       for (var i = 1; i <= 9; i++) {
         var myUl = document.createElement("ul");
