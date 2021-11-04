@@ -459,3 +459,5 @@ Vue.directive('focus', {
   }
 })
 ```
+
+## 20、v-model 和 event.target.value
