@@ -247,6 +247,29 @@ patchVnode是diff发生的地方，整体策略：深度优先，同层比较
   macrotasks任务的实现:
     setImmediate / MessageChannel / setTimeout
 
+```js
+// <div  ref="div"  style width="width" />
+// <button @click="changeWidth" />
+// width: 100px
+
+changeWidth(){
+    console.log(this.$refs.div.style.width) // 100px
+    this.width = 200px
+    this.$nextTick(()=>{
+      console.log(this.$refs.div.style.width) // 100px
+    })
+}
+mounted() {
+  console.log(this.$refs.div.style.width) // 100px
+  this.$nextTick(()=>{
+    console.log(this.$refs.div.style.width) // 200px
+  })
+  this.width = '200px'
+}
+// 在点击事件里边第一次点击，是不会获取更新数据的，包括nextTick函数中，第二次点击可以得到上次的变化
+// mounted 生命周期里边是 可以得到更细数据的
+```
+
 ## 14、谈一谈你对vue响应式原理的理解？
 
     1、object.defineProperty
@@ -440,6 +463,28 @@ export default class Watcher {
     　　deep: 深度监听，为了发现对象内部值的变化，复杂类型的数据时使用，例如数组中的对象内容的改变，注意监听数组的变动不需要这么做。注意：deep无法监听到数组的变动和对象的新增，参考vue数组变异,只有以响应式的方式触发才会被监听到。
     6. 当需要在数据变化时执行异步或开销较大的操作时，这个方式是最有用的。这是和computed最大的区别，请勿滥用.
 
+```js
+data(){
+ return {
+   age:5,
+   type: 'child'
+ }
+},
+computed: {
+ naive(){
+   console.log('check is naive')
+   if(this.age < 10 || this.type === 'child'){
+     return 'yes'
+   }
+   return  'no'
+ }
+}
+// 更新this.type会输出check is naive吗？ 不会输出！！！
+// 看条件判断,重点在条件判断地方
+```
+
+我们在组件中使用computed计算属性时，当组件初始化的时候系统变会对为个定义的key都创建了对应的watcher, 并有一个特殊的参数lazy,然后调用了自己的getter方法,这样就收集了这个计算属性依赖的所有data,那么所依赖的data会收集这个订阅者同时会针对computed中的key添加属性描述符创建了独有的get方法，当调用计算属性的时候，这个get判断dirty是否为true，为真则表示要要重新计算，反之直接返回value。当依赖的data 变化的时候会触发数据的set方法调用update()通知更新，此时会把dirty设置成true，所以computed 就会重新计算这个值，从而达到动态计算的目的。
+
 ## 18、vue.$set vue.$delete
 
     实例创建后添加属性，并不会触发视图更新
@@ -473,6 +518,53 @@ Vue.directive('focus', {
 在vue3.0中，v-model后面需要跟一个modelValue，即要双向绑定的属性名，Vue3.0就是通过给不同的v-model指定不同的modelValue来实现多个v-model。
 
 参考地址: https://v3.vuejs.org/guide/migration/v-model.html#overview
+
 ## 21、v-model 和 event.target.value
 
-  2222
+当input事件是由IME （即由输入法触发）构成触发的，会直接return，不再获取值。
+
+v-model是value和oninput事件的结合，能够动态地对value进行改变，就是若是value被改变了，能够很快地反映到对应的组件当中，改变该组件的value
+
+## 22、vue 怎么监听数组的？
+
+在将数组处理成响应式数据后，如果使用数组原始方法改变数组时，数组值会发生变化，但是并不会触发数组的setter来通知所有依赖该数组的地方进行更新，为此，vue通过重写数组的某些方法来监听数组变化，重写后的方法中会手动触发通知该数组的所有依赖进行更新。
+
+array.js中重写了数组的push、pop、shift、unshift、splice、sort、reverse七种方法，重写方法在实现时除了将数组方法名对应的原始方法调用一遍并将执行结果返回外，还通过执行ob.dep.notify()将当前数组的变更通知给其订阅者，这样当使用重写后方法改变数组后，数组订阅者会将这边变化更新到页面中。
+
+重写完数组的上述7种方法外，我们还需要将这些重写的方法应用到数组上，因此在Observer构造函数中，可以看到在监听数据时会判断数据类型是否为数组。当为数组时，如果浏览器支持__proto__，则直接将当前数据的原型__proto__指向重写后的数组方法对象arrayMethods，如果浏览器不支持__proto__，则直接将arrayMethods上重写的方法直接定义到当前数据对象上；当数据类型为非数组时，继续递归执行数据的监听。
+
+## 23、Vue router两种路由方式分别什么实现原理
+
+    HashHistory window.addEventListener("hashchange", funcRef, false)
+    HTML5History
+        window.history.pushState(stateObject, title, URL)
+        window.history.replaceState(stateObject, title, URL)
+        popState
+    transitionTo( )函数
+        HashHistory.push() HashHistory.replace()
+        HTML5History.pushState()和HTML5History.replaceState(）
+
+## 24、vue生命周期 父子组件生命周期
+
+    父beforeCreate->父created->父beforeMount->子beforeCreate->子created->子beforeMount->子mounted->父mounted
+    父beforeUpdate->子beforeUpdate->子updated->父updated
+    父beforeDestroy->子beforeDestroy->子destroyed->父destroyed
+    父create->子created->子mounted->父mounted
+
+## 25、Vue mixin 左右、原理、覆盖顺序
+
+    Mixins：则是在引入组件之后与组件中的对象和方法进行合并，相当于扩展了父组件的对象与方法，可以理解为形成了一个新的组件。
+
+## 26、vue的inject provide是怎么做的？
+
+    1、mergeOptions函数
+    2、normalizeInject(child, vm);
+    3、vm.$options.inject = {"parentValue": {"from": "parentValue"}}
+    4、实例化子组件时对inject的处理。在_init时会调用initInjections函数
+    5、从resolveInject函数可以看到通过while循环，以及source = source.$parent 找到父组件中的_provided属性，拿到其值，**也就拿到父组件提供的provide了**
+    6、调用了mergeOptions对父组件中的provide属性进行了处理
+    7、vm.$options.provide 就是mergedInstanceDataFn函数。通过调用这个函数我们_provided就成为了{"parentValue":"here is parent data"}
+
+## 27、vuex 为什么不是响应式的
+
+    原来获取 vuex 中的值一定要用计算属性获取
