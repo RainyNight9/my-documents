@@ -459,3 +459,17 @@ Vue.directive('focus', {
   }
 })
 ```
+
+## 20、在Vue3.0优雅的使用v-model
+
+在Vue2.0中如何实现双向数据绑定：
+
+一种是v-model，另一种是.sync。
+
+因为一个组件只能用于一个v-model，但是有的组件需要有多个可以双向响应的数据，所以就出现了.sync。
+
+在Vue3.0中为了实现统一，实现了让一个组件可以拥有多个v-model，同时删除掉了.sync。
+
+在vue3.0中，v-model后面需要跟一个modelValue，即要双向绑定的属性名，Vue3.0就是通过给不同的v-model指定不同的modelValue来实现多个v-model。
+
+参考地址: https://v3.vuejs.org/guide/migration/v-model.html#overview

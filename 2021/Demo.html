@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-      html,
+      /* html,
       body,
       ul,
       li {
@@ -50,6 +50,13 @@
       }
       .cc{
         width: 100px;
+      } */
+      .c{
+        width: 100px;
+        height: 100px;
+        padding-left: 10px;
+        margin-left: 10px;
+        border: 1px solid;
       }
     </style>
   </head>
@@ -58,23 +65,27 @@
     <!-- <div class="pos">
       dsdsadd
     </div> -->
-    <div class="flex">
+    <!-- <div class="flex">
       <div class="cc">1</div>
       <div class="cc">2</div>
       <div class="cc">3</div>
-    </div>
+    </div> -->
+
+    <div class="p">
+      <div class="c">ssss</div>
+    </div> 
 
     <script>
-      for (var i = 1; i <= 9; i++) {
-        var myUl = document.createElement("ul");
-        for (var j = 1; j <= i; j++) {
-          var myLi = document.createElement("li");
-          var myText = document.createTextNode(j + " × " + i + " = " + i * j);
-          myLi.appendChild(myText);
-          myUl.appendChild(myLi);
-        }
-        document.getElementsByTagName("body")[0].appendChild(myUl);
-      }
+      // for (var i = 1; i <= 9; i++) {
+      //   var myUl = document.createElement("ul");
+      //   for (var j = 1; j <= i; j++) {
+      //     var myLi = document.createElement("li");
+      //     var myText = document.createTextNode(j + " × " + i + " = " + i * j);
+      //     myLi.appendChild(myText);
+      //     myUl.appendChild(myLi);
+      //   }
+      //   document.getElementsByTagName("body")[0].appendChild(myUl);
+      // }
     </script>
 
     <script>
