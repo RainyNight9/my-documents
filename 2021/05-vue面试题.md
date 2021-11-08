@@ -473,3 +473,6 @@ Vue.directive('focus', {
 在vue3.0中，v-model后面需要跟一个modelValue，即要双向绑定的属性名，Vue3.0就是通过给不同的v-model指定不同的modelValue来实现多个v-model。
 
 参考地址: https://v3.vuejs.org/guide/migration/v-model.html#overview
+## 21、v-model 和 event.target.value
+
+  2222
