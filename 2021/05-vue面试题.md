@@ -568,3 +568,8 @@ array.js中重写了数组的push、pop、shift、unshift、splice、sort、reve
 ## 27、vuex 为什么不是响应式的
 
     原来获取 vuex 中的值一定要用计算属性获取
+
+## 28、v-show和v-if区别
+
+    与v-if不同的是，无论v-show的值为true或false，元素都会存在于HTML代码中；display：none； 恢复默认
+    而只有当v-if的值为true，元素才会存在于HTML代码中

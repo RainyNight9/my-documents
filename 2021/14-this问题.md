@@ -305,3 +305,198 @@ myFun.call(null); // 10 9
 obj.fn(); // 3 27
 console.log(window.number); // 20
 ```
+
+```js
+console.log(a);
+var a=3;
+function a(){}
+console.log(a);
+// ƒ a(){}
+// 3
+```
+
+```js
+// bar(); // bar is not defined
+var foo = function bar(name) {
+  console.log("hello" + name);
+  console.log(bar); // [Function: bar]
+};
+console.log(typeof bar); // undefined
+foo("world"); // "helloworld"
+// console.log(bar); // bar is not defined
+console.log(foo.toString());
+bar(); // bar is not defined
+```
+
+```js
+console.log("AAAA");
+setTimeout(() => console.log("BBBB"), 1000);
+const start = new Date();
+while (new Date() - start < 3000) {}
+console.log("CCCC");
+setTimeout(() => console.log("DDDD"), 0);
+new Promise((resolve, reject) => {
+   console.log("EEEE");
+   foo.bar(100);
+ })
+ .then(() => console.log("FFFF"))
+ .then(() => console.log("GGGG"))
+ .catch(() => console.log("HHHH"));
+ console.log("IIII");
+
+// AAAA
+// CCCC
+// EEEE
+// IIII
+// HHHH
+// BBBB
+// DDDD
+// foo.bar(100); 的报错
+// while (new Date() - start < 3000) {} 时间消耗
+```
+
+```js
+async function async1() {
+  console.log("AAAA");
+  await async2();
+  console.log("BBBB");
+}
+async function async2() {
+  console.log("CCCC");
+}
+console.log("DDDD");
+setTimeout(function () {
+  console.log("FFFF");
+}, 0);
+async1();
+new Promise(function (resolve) {
+  console.log("GGGG");
+  resolve();
+}).then(function () {
+  console.log("HHHH");
+});
+console.log("IIII");
+
+// DDDD
+// AAAA
+// CCCC
+// BBBB
+// GGGG
+// IIII
+// HHHH
+// FFFF
+
+// DDDD
+// AAAA
+// CCCC
+// GGGG
+// IIII
+// BBBB
+// HHHH
+// FFFF
+```
+
+```js
+function Foo() {
+  getName = function () {
+    console.log(1);
+  };
+  return this;
+}
+Foo.getName = function () {
+  console.log(2);
+};
+Foo.prototype.getName = function () {
+  console.log(3);
+};
+var getName = function () {
+  console.log(4);
+};
+function getName() {
+  console.log(5);
+}
+
+Foo.getName(); // 2
+Foo().getName(); // 1
+getName(); // 1
+new Foo.getName(); // 2
+new Foo().getName(); // 3
+new new Foo().getName(); // 3
+
+// 调用Foo的静态方法，所以，打印2
+// Foo()就是普通函数调用，返回的this是window，后面调用window.getName()，而window下的getName在Foo()中调用getName被重新赋值,所以,打印1
+// 在执行过Foo().getName()的基础上，所以getName=function(){console.log(1)},所以,打印1，[如果getName()放在Foo().getName()上执行打印结果为4]
+// 构造器私有属性的getName(),所以,打印2
+// 原型上的getName()，打印3
+// 首先new  Foo()得到一个空对象{}。
+// 第二步向空对象中添加一个属性getName，值为一个函数。
+// 第三步new {}.getName()。
+// 等价于 var bar = new (new Foo().getName)();  
+// console.log(bar)。
+// 先new Foo得到的实例对象上的getName方法，再将这个原型上getName方法当做构造函数继续new ，所以执行原型上的方法,打印3
+```
+
+```js
+var length = 10;
+function fn() {
+  console.log(this.length);
+}
+ 
+var obj = {
+  length: 5,
+  method: function(fn) {
+    fn();
+    arguments[0]();
+  }
+};
+ 
+obj.method(fn, 1); 
+// 10
+// 2
+```
+
+解析：
+
+  首先，我们在全局定义了一个变量length、一个对象obj和一个函数fn，length赋值为10。
+  接下来是fn函数，输出this.length。
+  对象obj中，obj.length是5，obj.method是一个函数。method函数里面的形参也是一个函数，这个函数里面调用了fn函数，arguments是一个伪数组，代表method函数实际接收到的参数列表，所以arguments[0] ()就代表了调用arguments里的第一项。
+  obj.method(fn, 1)代表的就是调用obj当中的method函数，并且传递了两个参数，fn和1。
+
+分析完了代码的含义，我们来看输出结果。
+
+  method函数当中调用的fn函数是全局当中的函数，所以this指向的是window，this.length就是10。
+  上面说了，arguments[0] ()代表的是调用arguments里面的第一项，也就是传参进来的fn，所以这个this指向的是arguments，method函数接收的参数是两个，所以arguments.length就是2。
+  最后的输出结果就是  10  2
+
+```js
+function a(xx){
+  this.x = xx;
+  return this;
+};
+var x = a(5);
+var y = a(6);
+
+console.log(x.x);
+console.log(y.x);
+
+// x = window
+// y = window
+// x = 6
+// 6.x = undefined
+// window.x = 6
+```
+
+解析：
+
+  首先，我们在全局定义了一个变量x、一个变量y和一个函数a，函数a当中的this.x等于接收到的参数，返回this，这里要注意，返回的不是this.x，而是this。
+  接下来我们给x赋值，值为a(5)，又给y进行赋值，值为a(6)。
+  最后，我们输出x.x，y.x。
+
+分析完代码的含义，我们来看输出结果。
+
+  a函数传了一个参数5，那么this.x就被赋值为了5，函数a的this指向的是window，也就是window.x = 5。
+  上面我们说过，这个函数返回的是this，也就是this指向的window，x = a(5)就相当于window.x = window，此时的x被赋值为了window。
+  下面又执行了y = a(6)，也就是说，x的值再次发生了改变，变为了6，y则被赋值为了window。
+  console.log(x.x)就相当于console.log(6.x)，输出的自然是undefined。
+  console.log(y.x)，输出的相当于是console.log(window.x)，得到的值自然是6。
+  最后输出的结果为  undefined   6
