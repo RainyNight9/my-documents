@@ -1,0 +1,155 @@
+<!-- 1、头部消息提示组件 -->
+<script type="text/x-template" id="message">
+  <div class="message-box">
+    <h3>
+      <!-- 具名插槽 -->
+      <slot name="title"></slot>
+      <span class="message-box-close" @click="$emit('close')">X</span>
+    </h3>
+    <!-- 匿名插槽 -->
+    <slot></slot>
+  </div>
+</script>
+
+<script>
+  const Message = {
+    template: '#message',
+    // ⾃定义事件
+    emits: ['close']
+  }
+</script>
+
+<style>
+  .message-box {
+    width: 300px;
+    padding: 10px 20px;
+    background: #4fc08d;
+    border: 1px solid #42b983;
+    color: #fff
+  }
+
+  .message-box-close {
+    float: right;
+    cursor: pointer;
+  }
+</style>
+
+
+<!-- 2、紧接着的表单组件 -->
+<script type="text/x-template" id="list-add">
+  <div>
+    <!-- 表单输入 -->
+    <input type="text" :value="item" @input="$emit('update:item', $event.target.value)" @keydown.enter="addList" />
+    <!-- 事件处理 -->
+    <button v-on:click="addList">新增技术栈</button>
+  </div>
+</script>
+
+<script>
+  const ListAdd = {
+    template: '#list-add',
+    props: {
+      item: {
+        type: String,
+        required: true
+      },
+    },
+    // ⾃定义事件
+    emits: ['update:item', 'add'],
+    methods: {
+      addList() {
+        this.$emit('add')
+      }
+    }
+  }
+</script>
+
+
+<!-- 3、紧接着的列表展示组件 -->
+<script type="text/x-template" id="list">
+  <div>
+    <!-- 列表渲染 -->
+    <ul>
+      <li v-for="item in list" :key="item" :class="{active: selected === item}" @click="selected = item">
+        {{item}}
+      </li>
+    </ul>
+    <!-- 条件渲染 -->
+    <p v-if="list.length === 0">没有任何技术栈</p>
+  </div>
+</script>
+
+<script>
+  const List = {
+    template: "#list",
+    data() {
+      return {
+        selected: "",
+      };
+    },
+    props: {
+      list: {
+        type: Array,
+        required: true,
+      },
+    },
+  };
+</script>
+
+
+<!-- 4、主元素、父组件 -->
+<div id="app">
+  <!-- 消息提示框 -->
+  <message v-if="showMsg" @close="showMsg = false">
+    <template v-slot:title>
+      恭喜您
+    </template>
+    <template v-slot:default>
+      新增技术栈成功！
+    </template>
+  </message>
+
+  <list-add v-model:item="item" @add="addList"></list-add>
+
+  <list :list="list"></list>
+</div>
+
+<!-- 引入vue -->
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+  // 创建一个应用程序的实例
+  Vue.createApp({
+    // 局部注册
+    components: {
+      'list-add': ListAdd
+    },
+    data() {
+      return {
+        list: [],
+        item: '',
+        showMsg: false
+      };
+    },
+    created() {
+      setTimeout(() => {
+        this.list = ["react15", "vue2"];
+      }, 1000);
+    },
+    methods: {
+      addList() {
+        this.list.push(this.item);
+        this.item = ''
+
+        this.showMsg = true
+      },
+    },
+  })
+    .component("list", List) // 全局注册
+    .component("message", Message) // 全局注册
+    .mount("#app");
+</script>
+<style>
+  .active {
+    background-color: #ccc;
+  }
+</style>

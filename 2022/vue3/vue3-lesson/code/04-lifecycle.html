@@ -1,0 +1,61 @@
+<div id="app">
+  <h1 :title="title">{{title}}</h1>
+</div>
+
+<!-- 引入vue -->
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        title: "vue生命周期",
+        counter: 1
+      };
+    },
+    // 初始化阶段
+    beforeCreate() {
+      console.log('beforeCreated');
+    },
+    created() {
+      console.log('created');
+    },
+    beforeMount() {
+      console.log('beforeMount');
+    },
+    mounted() {
+      console.log('mounted');
+      setInterval(() => {
+        this.counter++
+        if (this.counter == 5) {
+          app.unmount()
+        } else {
+          this.title = this.title.split('').reverse().join('')
+        }
+      }, 2000);
+      this.$nextTick(() => { })
+    },
+    // 更新阶段
+    beforeUpdate() {
+      console.log('beforeUpdate');
+    },
+    updated() {
+      console.log('updated');
+      this.$nextTick(() => { })
+    },
+    // 销毁阶段
+    beforeUnmount() {
+      console.log('beforeUnmount');
+    },
+    unmounted() {
+      console.log('unmounted');
+    },
+    // 调试钩子
+    renderTracked({ key, type, target }) {
+      console.log(key, type, target);
+    },
+    renderTriggered({ key, type, target }) {
+      console.log(key, type, target);
+    }
+  })
+  app.mount("#app");
+</script>

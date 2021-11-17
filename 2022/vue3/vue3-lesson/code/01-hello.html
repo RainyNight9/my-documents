@@ -1,0 +1,63 @@
+<div id="app">
+  <!-- 插值 - interpolations -->
+  <h1>{{title}}</h1>
+  <!-- 特性 - attributes -->
+  <h2 v-bind:title="title">特性、属性值绑定使⽤v-bind指令</h2>
+  <!-- HTML内容 -->
+  <h3 v-html="myHtml"></h3>
+  <!-- 计算属性 -->
+  <h4>{{computedTitle}}</h4>
+  <!-- 侦听器 -->
+  <h5>{{watchTitle}}</h5>
+  <!-- 动态地切换class -->
+  <div :class="{ active: isActive }">动态地切换class</div>
+  <!-- 传⼊更多字段来动态切换多个class -->
+  <div :class="{ active: isActive, 'text-danger': hasError }">传⼊更多字段来动态切换多个class</div>
+  <!-- 绑定内联样式 -->
+  <div :style="{ color: activeColor, fontSize: fontSize + 'px' }">绑定内联样式</div>
+</div>
+
+<!-- 引入vue -->
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+  Vue.createApp({
+    data() {
+      return {
+        title: 'hello, vue3！I am interpolations.',
+        myHtml: 'HTML内容绑定使⽤v-html指令',
+        watchTitle: '',
+        isActive: true,
+        hasError: true,
+        activeColor: 'red',
+        fontSize: 30
+      }
+    },
+    computed: {
+      computedTitle() {
+        return this.title.split('').reverse().join('')
+      }
+    },
+    watch: {
+      // title(newValue, oldValue) {
+      //   this.watchTitle = newValue.split('').reverse().join('')
+      // },
+      title: {
+        immediate: true, // 立刻执行
+        // deep: true, // 深度侦听内部嵌套属性
+        handler(newValue, oldValue) {
+          this.watchTitle = newValue.split("").reverse().join("");
+        },
+      },
+    },
+  }).mount('#app')
+</script>
+
+<style>
+  .active {
+    background-color: #ddd;
+  }
+
+  .text-danger {
+    color: red;
+  }
+</style>

@@ -1,0 +1,82 @@
+<div id="app">
+  <!-- 列表渲染 -->
+  <ul>
+    <li v-for="item in list" :class="{active: (selectedItem === item)}" @click="selectedItem = item">{{item}}</li>
+  </ul>
+  <!-- 条件渲染 -->
+  <p v-if="list.length == 0">没有任何技术栈信息</p>
+  <!-- 事件处理 -->
+  <button v-on:click="addList">新增技术栈</button>
+  <!-- v-model基础用法 -->
+  <!-- text/textarea -->
+  <div style="margin-top: 20px;">
+    <input v-model="message" placeholder="请输入" />
+    <p>Message is: {{ message }}</p>
+  </div>
+  <!-- 单个radio/checkbox -->
+  <div>
+    <label for="checkbox">{{ checked }}</label>
+    <input type="checkbox" id="checkbox" v-model="checked" />
+  </div>
+  <!-- 多个checkbox -->
+  <div>
+    <input type="checkbox" id="qd" value="qd" v-model="checkedNames" />
+    <label for="qd">前端</label>
+    <input type="checkbox" id="hd" value="hd" v-model="checkedNames" />
+    <label for="hd">后端</label>
+    <input type="checkbox" id="sf" value="sf" v-model="checkedNames" />
+    <label for="sf">算法</label>
+    <br />
+    <span>{{ checkedNames }}</span>
+  </div>
+  <!-- select -->
+  <div>
+    <select v-model="selected">
+      <option disabled value="">请选择</option>
+      <option>前端</option>
+      <option>后端</option>
+      <option>算法</option>
+    </select>
+    <p>Selected: {{ selected }}</p>
+  </div>
+  <!-- 表单输⼊绑定 -->
+  <input v-model="value" type="text" v-on:keydown.enter="addValue" />
+  <p>addValue: {{ value2 }}</p>
+</div>
+
+<!-- 引入vue -->
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+  Vue.createApp({
+    data() {
+      return {
+        list: ['react15', 'vue2', 'react16', 'vue3'],
+        selectedItem: '',
+        message: '',
+        checked: false,
+        checkedNames: ['qd'],
+        selected: '',
+        value: '',
+        value2: ''
+      }
+    },
+    methods: {
+      addList() {
+        this.list.push('react17')
+      },
+      addValue() {
+        this.value2 = this.value
+      }
+    },
+  }).mount('#app')
+</script>
+
+<style>
+  li {
+    cursor: pointer;
+  }
+
+  .active {
+    background-color: #ddd;
+  }
+</style>
