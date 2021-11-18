@@ -1,0 +1,71 @@
+<div id="app">
+  {{ title }}
+  <modal>
+    我是弹窗。。。
+  </modal>
+</div>
+
+<script type="text/x-template" id="myModal">
+  <button @click="modalOpen = true">打开窗口</button>
+  <teleport to="body">
+    <div v-if="modalOpen" class="modal">
+      <div class="content">
+        <slot></slot>
+        <button @click="modalOpen = false">关闭</button>
+      </div>
+    </div>
+  </teleport>
+</script>
+
+<script>
+  const Modal = {
+    template: '#myModal',
+    data() {
+      return {
+        modalOpen: false
+      }
+    },
+  }
+</script>
+
+<!-- 引入vue -->
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+  const { createApp } = Vue
+  createApp({
+    components: {
+      Modal,
+    },
+    data() {
+      return {
+        title: ' Teleport 传送'
+      }
+    }
+  }).mount('#app')
+</script>
+
+<style>
+  .modal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    width: 300px;
+    height: 300px;
+    padding: 5px;
+  }
+</style>

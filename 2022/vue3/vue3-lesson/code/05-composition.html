@@ -1,0 +1,170 @@
+<script>
+  const Tua = {
+    template: `<div>tua <slot /></div>`,
+    props: {
+      dong: {
+        type: String,
+        default: ''
+      },
+    },
+    setup(props, ctx) {
+      console.log('Tua setup', props, ctx);
+
+      // 注入祖代传入的值 
+      const theme = inject('colorTheme')
+      console.log('colorTheme', theme);
+
+      watchEffect(() => {
+        console.log('watchEffect', props.dong);
+        console.log(`theme: ${theme}`)
+      })
+    }
+  }
+</script>
+
+<div id="app">
+  <!-- reactive -->
+  <div>{{ state.foo }}</div>
+
+  <!-- 组件 -->
+  <tua dong="dong" tua="tua">
+    天霸动霸tua
+  </tua>
+
+  <!-- ref -->
+  <div ref="countDom">{{ count }}</div>
+
+  <!-- toRefs -->
+  <div>{{ one }} {{ two }}</div>
+
+  <!-- computed -->
+  <div>{{ doubleCount }}</div>
+  <div>{{ tripleCount }}</div>
+
+  <!-- counter -->
+  <div>{{ counter }}</div>
+</div>
+
+<!-- 引入vue -->
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+  const { createApp, reactive, h, getCurrentInstance, ref, toRefs, computed, watchEffect, watch,
+    onMounted, onUpdated, onUnmounted, provide, inject } = Vue
+
+  const vm = createApp({
+    // 局部注册
+    components: {
+      'tua': Tua
+    },
+    setup(props, context) {
+      console.log('setup', props, context)
+
+      // 在 setup() 中获取组件实例
+      const instance = getCurrentInstance()
+      console.log('instance', instance);
+
+      // reactive：对象响应式
+      const state = reactive({ foo: '前端' })
+
+      setTimeout(() => state.foo = '后端', 1000)
+
+      // ref：单值响应式
+      const count = ref(0)
+      console.log('count', count.value) // 0
+
+      setTimeout(() => count.value++, 2000)
+      console.log('count', count.value) // 1
+
+      // toRefs 把⼀个响应式对象转换成普通对象，该普通对象的每个属性都是⼀个Ref
+      const runMan = reactive({
+        one: '天霸',
+        two: '动霸',
+      })
+      const runManAsRefs = toRefs(runMan)
+      console.log('toRefs', runManAsRefs)
+
+      const countDom = ref(null)
+
+      // computed ：计算属性
+      const doubleCount = computed(() => count.value * 2)
+      console.log('doubleCount', doubleCount.value)
+      // doubleCount.value++ // 错误
+
+      const tripleCount = computed({
+        get: () => count.value * 3,
+        set: (val) => {
+          count.value = val * 3
+        },
+      })
+      tripleCount.value = 3
+      console.log('tripleCount', count.value)
+
+      // watchEffect ：副作⽤侦听器
+      watchEffect(() => console.log('watchEffect', count.value))
+      setTimeout(() => count.value++, 1000)
+
+      // watch ：侦听器
+      watch(
+        () => state.foo,
+        (foo, prevFoo) => { console.log('watch', foo, prevFoo) }
+      )
+
+      // 直接侦听⼀个 ref
+      watch(count, (count, prevCount) => { console.log('watch', count, prevCount) })
+
+      // watcher 也可以使⽤数组来同时侦听多个源：
+      watch([state, count], ([state, count], [prevState, prevCount]) => { console.log('watch', state, count, prevState, prevCount) })
+
+      // 生命周期
+      onMounted(() => {
+        console.log('mounted!')
+      })
+      onMounted(() => {
+        console.log('mounted! 222')
+        // 挂载后, dom会被赋值给countDom这个ref对象
+        console.log('countDom', countDom)
+      })
+      onUpdated(() => {
+        console.log('updated!')
+      })
+      onUnmounted(() => {
+        console.log('unmounted!')
+      })
+
+      // useCounter
+      const counter = useCounter()
+
+      // 依赖注⼊
+      provide('colorTheme', 'dark')
+
+      // 1、暴露给模板
+      return {
+        state,
+        count,
+        // 使⽤toRefs转换 runMan，视图中可避免引⽤ runMan
+        ...toRefs(runMan),
+        doubleCount,
+        tripleCount,
+        counter
+      }
+      // // 2、返回⼀个函数作为渲染函数
+      // return () => h('div', state.foo)
+    }
+  }).mount('#app')
+
+  function useCounter() {
+    const counter = ref(0)
+    let timer
+    onMounted(() => {
+      timer = setInterval(() => counter.value++, 1000)
+    })
+    onUnmounted(() => {
+      clearInterval(timer)
+    })
+    return counter
+  }
+
+</script>
+
+<style>
+</style>
