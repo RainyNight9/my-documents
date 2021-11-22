@@ -1,0 +1,61 @@
+<div id="app">
+  {{ title }}
+  <button @click="$message({msg: '你想知道啥呢？'})">show message</button>
+</div>
+
+<!-- 引入vue -->
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+  const { createApp, render, h } = Vue
+
+  // 声明一个插件
+  const MessagePlugin = function (app) {
+    // 1.声明一个组件
+    const MyMessage = {
+      props: {
+        msg: {
+          type: String,
+          required: true
+        },
+        duration: {
+          type: Number,
+          default: 1000
+        }
+      },
+      template:
+        `<div class="message-box">
+          <p>{{msg}}</p>
+        </div>`,
+      mounted() {
+        setTimeout(() => {
+          // 传入null用于删除
+          app.config.globalProperties.$message(null)
+        }, this.duration);
+      }
+    }
+
+    // 2.组件添加
+    const container = document.createElement('div')
+    document.body.appendChild(container)
+
+    // 3.注册全局实例方法$message
+    app.config.globalProperties.$message = function (props) {
+      if (props) {
+        render(h(MyMessage, props), container)
+      } else {
+        render(null, container)
+      }
+    }
+  }
+
+
+  createApp({
+    data() {
+      return {
+        title: 'vue插件'
+      }
+    },
+  })
+    .use(MessagePlugin)
+    .mount('#app')
+</script>

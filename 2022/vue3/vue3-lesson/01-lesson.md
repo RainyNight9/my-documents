@@ -89,7 +89,7 @@
 
 >具体代码详见 `04-lifecycle.html`
 
-## 组件化开发
+## 2、组件化开发
 
 组件系统是 Vue 的另一个重要概念，因为它是一种抽象，允许我们使用小型、独立和通常可复用的组件构建大型应用。
 
@@ -106,7 +106,7 @@
 
 >具体代码详见 `03-component.html`
 
-## Composition API
+## 3、Composition API
 
 ⼀组低侵⼊式的、函数式的 API，使得我们能够更灵活地「组合」组件的逻辑。
 
@@ -114,14 +114,14 @@
 
 如果能够将同⼀个逻辑关注点相关的代码配置在⼀起会更好，这正是 Composition API设计的动机。
 
-### 1、setup
+### setup
 
   setup 函数是⼀个新的组件选项。作为在组件内使⽤ Composition API 的⼊⼝点。
   setup 也可以返回⼀个函数，该函数会作为组件渲染函数。
   setup 参数： setup(props, {attrs, slots, emit})
   props是响应式的，但是不能解构，否则将失去响应能⼒
 
-### 2、Reactivity API
+### Reactivity API
 
 * reactive ：对象响应式。接收⼀个普通对象然后返回该普通对象的响应式代理。等同于 vue 2.x 的 Vue.observable()
 * ref ：单值响应式。接受⼀个参数值并返回⼀个响应式Ref 对象。Ref 对象拥有⼀个指向内部值的单⼀属性 value。
@@ -136,7 +136,7 @@
 * watch需明确哪些状态改变触发重新执⾏副作⽤；
 * watch可访问侦听状态变化前后的值。
 
-### 3、⽣命周期钩⼦
+### setup中⽣命周期钩⼦
 
 ⽣命周期钩⼦可以通过 onXXX 形式导⼊并在setup内部注册。可以多次注册，按顺序执⾏。
 
@@ -154,17 +154,17 @@
 * onRenderTracked **新增**
 * onRenderTriggered **新增**
 
-### 4、依赖注⼊
+### 依赖注⼊
 
 在setup中依赖注⼊使⽤ provide 和 inject。
 
-### 5、模板引⽤
+### 模板引⽤
 
 当使⽤组合式 API 时，reactive refs 和 template refs 的概念已经是统⼀的。为了获得对模板内元素或组件实例的引⽤，我们可以像往常⼀样在 setup() 中声明⼀个 ref 并返回它。
 
 >具体代码详见 `05-composition.html`
 
-## 可复用性
+## 4、可复用性
 
 ### 混入 Mixin
 
@@ -197,5 +197,24 @@ Mixin 提供了一种非常灵活的方式，来分发 Vue 组件中的可复用
 
 ### 渲染函数 render
 
-渲染函数给我们提供完全JS编程能⼒，可以解决更复杂的模板需求。
+渲染函数给我们提供完全JS编程能⼒，可以解决更复杂的模板需求。它比模板更接近编译器。
+
+>具体代码详见 `09-render.html`
+
+### 插件
+
+插件是⾃包含的代码，通常给 Vue 添加全局功能。插件可以是包含 install() ⽅法的 object ，也可
+以是 function
+
+>具体代码详见 `10-plugin.html`
+
+## 5、工程化
+
+### Vite
+
+Vite是开发构建⼯具，开发期它利⽤浏览器 native ES Module 特性导⼊组织代码，⽣产中利⽤rollup作为打包⼯具，它有如下特点：
+
+* 光速启动
+* 热模块替换
+* 按需编译
 

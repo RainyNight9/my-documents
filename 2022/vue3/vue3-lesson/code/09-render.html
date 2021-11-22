@@ -1,6 +1,6 @@
 <div id="app">
   {{ title }}
-  <x-heading :level="3" :items="items">用户很懒，什么也没有留下</x-heading>
+  <my-head :level="2" :items="items">说点啥呢？真不知道说点啥。。。</my-head>
 </div>
 
 <!-- 引入vue -->
@@ -11,50 +11,49 @@
     data() {
       return {
         title: '渲染函数',
-        items: ['a', 'b', 'c']
+        items: ['前端', '后端', '算法']
       }
     },
   })
-  .component('x-heading', {
-    props: {
-      level: {
-        type: Number,
-        required: true
+    .component('my-head', {
+      props: {
+        level: {
+          type: Number,
+          required: true
+        },
+        items: {
+          type: Array,
+          default: []
+        },
+        modelValue: String
       },
-      items: {
-        type: Array,
-        default: []
-      },
-      modelValue: String
-    },
-    render() {
-      // 和vue2比较，不再接收一个h函数
-      // vue3中插槽和作用域插槽集中到$slots中，且每个值都是函数
+      render() {
+        // 和vue2比较，不再接收一个h函数
+        // vue3中插槽和作用域插槽集中到$slots中，且每个值都是函数
 
-      // 条件和循环
+        // 条件和循环
 
-      
-      // v-model => modelValue onUpdated:moelValue
-      return h(KInput, {
-        onClick: $event => console.log('clicked', $event.target),
-        modelValue: this.modelValue,
-        'onUpdate:modelValue': value => this.$emit('update:modelValue', value)
-      })
-      
-      // if (this.items.length) {
-      //   const chidren = this.items.map(item => h('li', item))
-      //   return h('ul', chidren)
-      // } else {
-      //   // 参数1-标签名称
-      //   // 参数2-若干属性和事件等
-      //   // 参数3-子元素-数组，如果是字符串-text
-      //   return h(
-      //     'h' + this.level, 
-      //     {},
-      //     this.$slots.default()
-      //   )
-      // }
-    }
-  })
-  .mount('#app')
+        // v-model => modelValue onUpdated:modelValue
+        // return h('input', {
+        //   onClick: $event => console.log('clicked', $event.target),
+        //   modelValue: this.modelValue,
+        //   'onUpdate:modelValue': value => this.$emit('update:modelValue', value)
+        // })
+
+        if (this.items.length) {
+          const li = this.items.map(item => h('li', item))
+          return h('ul', li)
+        } else {
+          // 参数1-标签名称
+          // 参数2-若干属性和事件等
+          // 参数3-子元素-数组，如果是字符串-text
+          return h(
+            'h' + this.level,
+            {},
+            this.$slots.default()
+          )
+        }
+      }
+    })
+    .mount('#app')
 </script>
