@@ -6,88 +6,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
   <style>
-    /* html,
-      body,
-      ul,
-      li {
-        padding: 0;
-        margin: 0;
-        border: 0;
-      }
-      ul {
-        width: 900px;
-        overflow: hidden;
-        margin-top: 4px;
-        font-size: 12px;
-        line-height: 36px;
-      }
-      li {
-        float: left;
-        width: 90px;
-        margin: 04px;
-        display: inline-block;
-        text-align: center;
-        border: 1pxsolid#333;
-        background: yellowgreen;
-      }
-      .pos{
-        width: 300px;
-        height: 300px;
-        background-color: red;
-        border: 2px solid blue;
-        position: absolute;
-        bottom: 0;
-        display: none;
-      }
-      body{
-        height: 2000px;
-      }
-      .flex{
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: flex-end;
-        border: 1px solid red;
-      }
-      .cc{
-        width: 100px;
-      } */
-    .c {
-      width: 100px;
-      height: 100px;
-      padding-left: 10px;
-      margin-left: 10px;
-      border: 1px solid;
-    }
+
   </style>
 </head>
 
 <body>
-  <!-- <div class="pos">
-      dsdsadd
-    </div> -->
-  <!-- <div class="flex">
-      <div class="cc">1</div>
-      <div class="cc">2</div>
-      <div class="cc">3</div>
-    </div> -->
+  <div id="app"></div>
 
-  <div class="p">
-    <div class="c">ssss</div>
-  </div>
+  <script src="demo.js"></script>
 
   <script>
-      // for (var i = 1; i <= 9; i++) {
-      //   var myUl = document.createElement("ul");
-      //   for (var j = 1; j <= i; j++) {
-      //     var myLi = document.createElement("li");
-      //     var myText = document.createTextNode(j + " × " + i + " = " + i * j);
-      //     myLi.appendChild(myText);
-      //     myUl.appendChild(myLi);
-      //   }
-      //   document.getElementsByTagName("body")[0].appendChild(myUl);
-      // }
+    const obj = {
+      name: '前端',
+      num: 1,
+      action: '学呀',
+      emo: '😭'
+    }
+
+    const data = reactive(obj)
+
+    const app = document.getElementById('app')
+
+    const myAction = computed(() => {
+      data.action = ''
+      for (let i = 0; i < data.num; i++) {
+        data.action += `学呀 `
+      }
+      return data.action
+    })
+
+    const myEmo = computed(() => {
+      data.emo = ''
+      for (let i = 0; i < data.num; i++) {
+        data.emo += `😭 `
+      }
+      return data.emo
+    })
+
+    // effect() 定义我们的更新函数
+    effect(() => {
+      console.log(myAction)
+      app.innerHTML = `<h1>${data.name}主流框架现有${data.num}个</h1>
+      <h2>我们就要不停的${myAction.value}!</h2>
+      <h3>${myEmo.value}</h3>`
+    })
+
+    // 修改一下数值
+    const timerId = setInterval(() => {
+      data.num++
+      if (data.num > 8) clearInterval(timerId)
+    }, 5000);
   </script>
+
+
+
+
+
 
   <script>
     const test = [
@@ -107,9 +81,6 @@
       "https://wx2.sinaimg.cn/large/9b7f515dly8gu3k1rdabdj20xc035wev.jpg",
       "https://wx3.sinaimg.cn/large/9b7f515dly8gu3k1rkcxvj20xc0383yv.jpg",
     ];
-
-    
-
   </script>
 </body>
 
