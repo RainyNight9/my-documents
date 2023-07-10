@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>学习里程碑 | 🏆 - 基础篇完结</h2><p>首先，恭喜你能从第一章坚持学习到这里。这一章，我们就一起来回顾一下我们都学到了什么。</p><p><img
+        src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/437c5900fd524160bc6cf673bcb4396c~tplv-k3u1fbpfcp-watermark.image?"
+        alt="image.png"></p><p>对照上图的实战路径，我们已经一起走过了<strong>需求分析</strong> ->
+      <strong>技术选型</strong> -> <strong>脚手架搭建</strong>三个环节，还完成了少量的<strong>需求开发</strong>任务。</p><h4>需求分析</h4><p>从应用场景到团队需求，我们进行了一轮对网关系统必要性的讨论，并将网关系统拆分为三个模块：<strong>网关基础</strong>、<strong>物料</strong>、<strong>用户</strong>三个服务，分别执行代理、鉴权、静态资源管理等功能。</p><h4>技术选项</h4><p>针对于需求分析得出来的结果，最终我们敲定了开发框架以及数据库的选型。对于项目开发的技术选型，从团队业务的角度出发，个人有下述一些想法：</p><ol><li>如果是稳定类型、或者团队主要的项目，切记不要强行尝试新的技术、框架，试错成本太高，一般的团队承受不起；</li><li>不到万不得不要自己造轮子，即使要造轮子也可以使用业务成熟的框架进行二开；</li><li>如果团队不大的情况，项目的基建要尽早统一，可以减少对接成本；</li><li>资源富裕的情况下，边缘类型的新项目、内部项目等尽可能尝试新的技术，技术团队始终要走在技术的前沿，有机会可以以技术驱动业务。</li></ol><h4>脚手架搭建</h4><p>在后续章节中围绕着开发脚手架搭建，我们一起学习了
+      <code>NestJS CLI</code> 的使用、<code>Controller</code>、<code>Service</code>、<code>Provide</code>、<code>Module</code>
+      等基础知识，同时对接了<strong>飞书应用</strong>、<strong>数据库</strong>、<strong>日志</strong>等小的需求开发。</p><p>几乎每一章的代码与步骤都尽可能详细地写在文章里面，包括预期的结果等。力争每一位前端同学都能够从
+      0 到 1 完成上述到所有内容，<strong>如果出现内容描述不清晰或者步骤缺失的情况，请及时联系我补充修改</strong>。</p><h2>仓库地址</h2><p><a
+        href="https://github.com/boty-design/gateway" target="_blank"
+        rel="nofollow noopener noreferrer">https://github.com/boty-design/gateway</a></p><p>上述是基础篇中代码的仓库地址，但并不包含<strong>配置文件（数据库、token这种都属于隐私性质的数据）</strong>，需要各位同学自己添加，<strong>如果
+        <code>demo</code> 跑不起来，加群@我解决，同时不到万不得已，建议还是自己从头撸出来</strong>。</p><p>下面是一份全量的
+      <code>example.yaml</code> 配置，由需要的同学自取：</p><pre><code class="hljs language-yml"><span class="hljs-attr">MONGODB_CONFIG:</span>  <span class="hljs-attr">name:</span> <span class="hljs-string">"fast_gateway_test"</span>  <span class="hljs-attr">type:</span> <span class="hljs-string">mongodb</span>  <span class="hljs-attr">url:</span> <span class="hljs-string">"mongodb://127.0.0.1:27017"</span>  <span class="hljs-attr">username:</span> <span class="hljs-string">"root"</span>  <span class="hljs-attr">password:</span> <span class="hljs-string">"root"</span>  <span class="hljs-attr">database:</span> <span class="hljs-string">"fast_gateway_test"</span>  <span class="hljs-attr">entities:</span> <span class="hljs-string">"mongo"</span>  <span class="hljs-attr">logging:</span> <span class="hljs-literal">false</span>  <span class="hljs-attr">synchronize:</span> <span class="hljs-literal">true</span><span class="hljs-attr">MYSQL_CONFIG:</span>  <span class="hljs-attr">name:</span> <span class="hljs-string">"user-test"</span>  <span class="hljs-attr">type:</span> <span class="hljs-string">"mysql"</span>  <span class="hljs-attr">host:</span> <span class="hljs-string">"127.0.0.1"</span>  <span class="hljs-attr">port:</span> <span class="hljs-number">3306</span>  <span class="hljs-attr">username:</span> <span class="hljs-string">"yanxiaofan"</span>  <span class="hljs-attr">password:</span> <span class="hljs-string">"123456"</span>  <span class="hljs-attr">database:</span> <span class="hljs-string">"user-test"</span>  <span class="hljs-attr">entities:</span> <span class="hljs-string">"mysql"</span>  <span class="hljs-attr">synchronize:</span> <span class="hljs-literal">true</span><span class="hljs-attr">REDIS_CONFIG:</span>  <span class="hljs-attr">host:</span> <span class="hljs-string">"127.0.0.1"</span>  <span class="hljs-attr">port:</span> <span class="hljs-number">6379</span>  <span class="hljs-attr">auth:</span> <span class="hljs-string">"yanxiaofan"</span>  <span class="hljs-attr">db:</span> <span class="hljs-number">1</span><span class="hljs-attr">TEST_VALUE:</span>  <span class="hljs-attr">name:</span> <span class="hljs-string">"cookie"</span><span class="hljs-attr">FEISHU_CONFIG:</span>  <span class="hljs-attr">FEISHU_URL:</span> <span class="hljs-string">https://open.feishu.cn/open-apis</span>  <span class="hljs-attr">FEISHU_API_HOST:</span> <span class="hljs-string">https://open.feishu.cn</span>  <span class="hljs-attr">FEISHU_APP_ID:</span> <span class="hljs-string">cli_xxxxxxx</span>  <span class="hljs-attr">FEISHU_APP_SECRET:</span> <span class="hljs-string">xxxxxxx</span><span class="hljs-attr">APP_TOKEN_CACHE_KEY:</span> <span class="hljs-string">APP_TOKEN_CACHE_KEY</span></code></pre><h2>Warring</h2><p>小册于
+      <code>2022/07/24</code> 进行了一个小型的版本重构，按照每一章的进度添加了最小示例，所有的步骤代码都已上传 <a
+        href="https://github.com/boty-design/gateway" target="_blank"
+        rel="nofollow noopener noreferrer">GitHub</a> 中，按照 <code>demo/v*</code>
+      的分支规则提交。</p><p>但建议同学们在学习的时候，尽量自己跟着小册的内容再配合阅读 <code>NestJS</code> 的官网
+      <code>API</code>
+      来进行，小册是提供一个快捷学习的途径，通过给予一个最终的目标，分阶段的让大家来学习，而不是单纯完成任务。我甚至可以写的再更详细一点，但如果直接复制、参考
+      <code>Demo</code> 来完成目标，最终预期的学习效果并不会非常理想。</p><p><strong>能够完完整整自己敲出来的代码才印象才是最深刻的，而在这过程中对
+        <code>NestJS</code> 开发的熟练度与理解包括排查错误与阅读文档的能力才会有很高的提升</strong>。</p><h2>END</h2><p>至此上半场的内容已经顺利完成，此时你应该依据具备了使用
+      <code>NestJS</code> 开发服务端的常规能力，接下来我们将进入下半场的内容 - <strong>项目实战</strong>。</p><p>在项目实战中，对于代码的内容会逐步减少，只有部分关键的代码会在文章中展示，原因有
+      2 个：</p><ol><li>大部分的业务开发代码价值都不会很高；</li><li>每个人的编码习惯不一样，对功能模块的划分、业务的封装都有自己的见解。</li></ol><p>所以实战篇的内容主要围绕着架构设计展开，但是最后依然会提供一份简单的实现代码作为参考，所以并不用担心没有参考的代码。</p><p>如果你有什么疑问，欢迎在评论区提出或者加群沟通。
+      👏</p>
+
+  </body>
+</html>

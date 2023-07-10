@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>前言</h2><p>通过上一章的学习，我们了解了网关系统，并且针对要做的功能做了项目架构设计与需求拆解。</p><p>那在一个项目正式开发之前，我们还需要做一个技术调研，从开发框架、使用的工具、数据库等等进行一系列的预研，避免在业务开发过程中出现因为技术原因导致完成不了需求的局面。</p><p>例如团队中并没有
+      <code>Java</code> 开发，构建工具使用了基于 <code>Java</code> 的 <code>Jenkins</code>，这个时候想对
+      <code>Jenkins</code> 有一些技术改造要求无法顺利完成。</p><p>本章我们就一起对<strong>开发框架</strong>与<strong>数据库</strong>的类型做简单的对比与选择。</p><blockquote><p>对于工程中所使用的环境以及中间件配置，感谢后端大佬<a
+          href="https://juejin.cn/user/325111173878983" target="_blank"
+          rel="nofollow noopener noreferrer">和耳朵</a>专门写了一篇介绍的文章配合一下，内容非常全面，需要的同学可以点击查看【<a
+          href="https://juejin.cn/post/7118919471317647397/" target="_blank"
+          rel="nofollow noopener noreferrer">环境与中间件配置</a>】</p></blockquote><h2>技术选型</h2><h3>开发框架选型</h3><p>市面上常见的网关系统及框架有如下几种。</p><blockquote><p>只是举了一些常见的框架，并未全部列出，还有很多其他优秀的框架可以自行找寻</p></blockquote><ul><li>Nginx+Lua：Open
+        Resty、Abtesting Gateway。</li><li>Java：Spring Cloud Gateway。</li><li>Go：Janus、Grpc-Gateway。</li><li>Node.js：Express
+        Gateway、MicroGateway。</li></ul><p>上述都是业内成熟的框架以及方案，并且网关系统作为<strong>独立</strong>于业务的技术中间层，并不存在开发语言与框架的限制，所以可以根据自己团队的实际技术栈选择适合的网关框架。</p><p>但对于前端开发者来说，使用其他语言的成本不低。同时为了更好地理解业务需求，我们并不打算使用市面已经开源或者成熟的框架去搭建一个网关系统，而是使用
+      <code>JS</code> 来从头搭建一个网关系统。</p><p>既然选择了 <code>JS</code>
+      来开发系统，服务端的开发框架也有很多比如老牌的 <code>Express</code>、<code>Koa</code>
+      等可供选择。这里，我们选择基于它俩封装的上层框架 <code>Egg</code> 与 <code>NestJs</code> 进行简单对比。</p><h4><code>Egg</code>
+      与 <code>NestJs</code> 对比</h4><p>首先，我们先看看两家的 <strong>Slogan</strong>。</p><ul><li><code>Egg</code>:
+        为企业级框架和应用而生。</li><li><code>NestJS</code>: 用于构建高效、可伸缩的服务端应用程序的渐进式
+        <strong>Node.js</strong> 框架。</li></ul><p>从 <strong>Slogan</strong>
+      上我们可以看出， <code>Egg</code>更关注<strong>企业</strong>的维度，<code>NestJS</code> 更注重<strong>项目</strong>这个维度。</p><p>接下来是它们的学习体验。首先是
+      <code>Egg</code>：</p><ol><li>文档体验非常棒，毕竟是阿里开源，国人开发的框架，中文文档内容很丰富，使用过程中出现问题，可以很方便地找到对应的内容。</li><li>奉行『<strong>约定优于配置</strong>』，按照<a
+          href="https://www.eggjs.org/zh-CN/advanced/loader" target="_blank"
+          rel="nofollow noopener noreferrer">一套统一的约定</a>进行应用开发，团队内部采用这种方式可以减少开发人员的学习与协同成本。</li><li>使用的总人数虽然不比
+        NestJS，但胜在国人多，遇到问题可以咨询的人也会多一些。</li></ol><p>接着是 <code>NestJS</code>：</p><ol><li>中文文档大部分的内容是中文直译，有些内容没有翻译完整或者翻译意境不对。另外，中文版本的内容也会落后英文版本很多，文档资料使用、学习起来会比较麻烦。</li><li>使用总人数虽然比
+        <code>Egg</code> 更多一些，但是在国内使用的人数不及 <code>Egg</code>，所以很多问题解答中文版本会少于
+        <code>Egg</code>。</li></ol><h4>技术分析</h4><p><strong>Egg</strong></p><ol><li><code>Egg</code>
+        的底层框架是基于 <code>Koa</code> 开发，在性能与开发体验上会比 <code>Express</code> 更优越。</li><li>可选用
+        <code>JS</code> 以及 <code>TS</code> 开发，两者都是基于 <code>Classify</code>
+        开发，对刚接触服务端开发的前端更友好。</li><li>约定优于配置，减少开发负担、学习以及协作成本。</li><li>高度可扩展的插件机制，可以方便定制插件。</li><li>内置集群：使用
+        <code>Cluster</code>，自带进程守护、多进程以及进程间通讯等功能。</li></ol><p><strong>NestJS</strong></p><ol><li><code>NestJS</code>
+        的底层框架是基于 <code>Express</code> 开发的。</li><li>除了 <code>Express</code> 之外，<code>NestJS</code>
+        也支持使用 <a href="https://github.com/fastify/fastify" target="_blank"
+          rel="nofollow noopener noreferrer">Fastify</a> 作为底层框架。因为 <code>NestJS</code>
+        的设计理念本身就是一个框架适配器，其主要功能是代理中间件和处理器到适当的特定库应用中，从而达到框架的独立性。</li><li><code>TS</code>
+        编程并结合了 <code>OOP</code>（面向对象编程），<code>FP</code>（函数式编程）和 <code>FRP</code>（函数式响应编程）的元素，学习成本会高于
+        <code>Egg</code>，对新手前端友好度不高，再加上文档缺陷，劝退概率倍增。</li><li>模块加载方面使用 IoC 模式：模块容器
+        - 依赖注入(通过装饰器和元数据实现)，开发效率以及维护性会更高。</li><li>整个框架的配套功能非常完善例如：鉴权、文档、微服务、<code>CLI</code>
+        工具等。</li></ol><h4>综合对比</h4><p><code>NestJS</code>
+      提供了更多的选择，更加自由以及更偏向后端开发的体验，而 <code>Egg</code> 作为深度定制过的框架，自定义的程度会弱于 <code>NestJS</code>，在团队初期快速开发业务的时候非常适合。</p><p>上述对比并不代表两个框架一定有个高下之分，针对于团队、项目的不同时期，开发人员的能力、喜好，哪一种框架能发挥最大价值，它就是当前对你来说最好的框架。</p><p>此外，使用
+      <code>Egg</code> 来对比 <code>NestJS</code> 并不是非常合适，两者的设计模式上有差别，理论上应该用另一款
+      <strong>IoC</strong> 框架 <a href="http://www.midwayjs.org/" target="_blank"
+        rel="nofollow noopener noreferrer">Midway</a> 来对比，不过在 <a
+        href="https://juejin.cn/book/6948353204648148995" target="_blank"
+        rel="nofollow noopener noreferrer">DevOps</a> 小册中我们使用 <code>Egg</code>
+      作为开发框架，所以这本小册优先使用了 <code>Egg</code> 作为选型对比。</p><h3>数据库选型</h3><p>数据库部分，我们主要对比
+      <strong>MySQL</strong> 和 <strong>MongoDB</strong>。</p><p><code>MySQL</code>
+      作为典型的关系型数据库，支持<strong>单点、集群部署架构</strong>，成熟度非常高。它作为开源数据库拥有非常全的文档与社区资源，出现问题能快速获得对应的帮助，后端首推数据库之一。</p><p>但是对于复杂读写操作，需要组合索引查询多表，对性能消耗不小，需要做读写分离或者表结构拆解，对业务架构设计要求比较高。</p><p><code>MongoDB</code>
+      是非关系型数据库、<code>nosql</code> 的代表作。它可以通过副本集、分片实现高可用，在集群架构拥有十分<strong>高的扩展性</strong>，但要实现这种高可用对运维的要求比较高。</p><p><code>MongoDB</code>
+      <strong>数据处理方式</strong> 是基于内存的，将热数据存在物理内存中，从而达到<strong>高速读写</strong>。由于性能出色，一般用在博客、内容管理等大数据存储的系统中较为合适。</p><p>总的来说，这两种数据库各有千秋，我们要根据不同的项目需求来选择合适的数据库。</p><p>在之前的架构设计中，我们一共需要开发
+      <strong>3</strong> 个系统，其中物料系统除了需要保存物料的版本信息之外，还需要存储 <code>HTML</code>
+      这种内容数据，所以<strong>在物料系统中使用 <code>MongoDB</code> 无疑是非常好的选择</strong>。<strong>常规的项目如用户中心，针对于权限的管理非常复杂，所以选择
+        <code>MySQL</code> 使用多表关联来存储数据更为合适。</strong></p><p>但是用户中心使用 <code>MySQL</code>
+      作为数据库的话，用户登录信息这种共用的数据就不可能保存在每个 <code>pod</code>，而且频繁的读取 <code>MySQL</code>
+      也不太实际。这个时候就需要使用 <code>Redis</code> 来做统一缓存，弥补关系型数据的缺陷。<code>Redis</code>
+      是一个高性能的 <strong>key-value</strong> 数据库，一般常用于业务数据缓存的操作。</p><h2>写在最后</h2><p>本章主要针对项目需求对技术选型做了一些介绍，对于
+      <code>Egg</code> 与 <code>NestJS</code> 的篇幅介绍较多，毕竟小册主要还是围绕 <code>NestJS</code>
+      展开的，其他工具详细的介绍与使用会在对应的篇幅再拓展。</p><p>此外，一个团队对技术的选择除了适配业务需求，也要考虑团队的整体水平与技术栈。例如，在团队后端的开发语言使用的是
+      <code>Go</code>，那么 <code>CICD</code> 工具选择 <code>Jenkins</code>
+      显然不是最优的选择，要考虑到使用与后期维护的问题。同样，如果团队水平梯度不高，就没有必要一定强上 <code>NestJS</code>，可以优先选用
+      <code>Egg</code> 这种对前端体验友好的框架，后期过渡升级到 <code>Midway</code> 也是合理的技术规划。</p><p>如果你有什么疑问，欢迎在评论区提出或者加群沟通。
+      👏</p>
+
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>前言</h2><p>本章将会记录微信群或者私人与我沟通所有学习篇相关的问题。</p><h2>飞书应用相关问题</h2><p>鉴于很多同学反馈对于飞书应用配置比较繁琐，为了方便协助大家完成飞书的流程，现在可以扫下面的二维码统一加入我创建的飞书组织：</p><p><img
+        src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/654f6d0dca464a7c9ae2b1356b636af1~tplv-k3u1fbpfcp-watermark.image?"
+        alt="飞书20221011-223636.png"></p><p><strong>飞书应用的秘钥如下，大家可以直接使用，加入飞书组织后需要的话可以联系我配置邮箱或者其他的数据，如果自己创建应用也可以联系我帮忙调整权限之类的</strong>：</p><pre><code class="hljs language-yaml"><span class="hljs-attr">FEISHU_CONFIG:</span>  <span class="hljs-attr">FEISHU_URL:</span> <span class="hljs-string">https://open.feishu.cn/open-apis</span>  <span class="hljs-attr">FEISHU_API_HOST:</span> <span class="hljs-string">https://open.feishu.cn</span>  <span class="hljs-attr">FEISHU_APP_ID:</span> <span class="hljs-string">cli_a2ed5e7be4f9500d</span>  <span class="hljs-attr">FEISHU_APP_SECRET:</span> <span class="hljs-string">HtMNYItwGbdp6yJv4o2j1fLrplwl6Mem</span></code></pre><h2>v9
+      版本升级方案</h2><p><code>NestJS</code> 于 <strong>7</strong> 月 <strong>8</strong>
+      号推送了 <strong>v9</strong> 版本，所以有不少同学在跟着教程安装的过程中出现了依赖问题。</p><p>本着买新不买旧的原则，小册也立马出更新升级
+      <strong>v9</strong> 的方案，如果你的项目配置出现问题可以参考如下的升级方案。</p><ol><li>升级所有相关的基础包到
+        <strong>v9</strong> 版本</li></ol><p>如果直接使用最新的 <strong>CLI</strong>
+      工具应该不需要升级基础包，如果不是的话，至少需要更新如下两个基础包的版本</p><pre><code class="hljs language-shell">yarn add @nestjs/core@9.0.1yarn add @nestjs/platform-fastify@9.0.1</code></pre><ol
+      start="2"><li><p>替换 <code>fastify</code> 相关依赖，之前所有 <code>fastify-</code>
+          规则的依赖都替换为 <code>@fastify/</code> 类型，例如 <code>fastify-cookie</code> 替换成
+          <code>@fastify/cookie</code></p></li><li><p>新版将只需要安装 <code>@nestjs/swagger</code>
+          即可，不在需要额外安装 <code>fastify-swagger</code></p></li><li><p>需要额外安装 <code>@fastify/static</code></p></li><li><p><code>redis</code>
+          模块采用 <a href="https://github.com/luin/ioredis" target="_blank"
+            rel="nofollow noopener noreferrer">ioredis</a> 替换之前的，配置方式略有改变如下所示：</p></li></ol><pre><code class="hljs language-ts"><span class="hljs-comment">// Before</span><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">await</span> <span class="hljs-title class_">NestFactory</span>.<span class="hljs-property">createMicroservice</span>&#x3C;<span class="hljs-title class_">MicroserviceOptions</span>>(  <span class="hljs-title class_">AppModule</span>,  {    <span class="hljs-attr">transport</span>: <span class="hljs-title class_">Transport</span>.<span class="hljs-property">REDIS</span>,    <span class="hljs-attr">options</span>: {      <span class="hljs-attr">url</span>: <span class="hljs-string">'redis://localhost:6379'</span>,    },  },);<span class="hljs-comment">// Now</span><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">await</span> <span class="hljs-title class_">NestFactory</span>.<span class="hljs-property">createMicroservice</span>&#x3C;<span class="hljs-title class_">MicroserviceOptions</span>>(  <span class="hljs-title class_">AppModule</span>,  {    <span class="hljs-attr">transport</span>: <span class="hljs-title class_">Transport</span>.<span class="hljs-property">REDIS</span>,    <span class="hljs-attr">options</span>: {      <span class="hljs-attr">host</span>: <span class="hljs-string">'localhost'</span>,      <span class="hljs-attr">port</span>: <span class="hljs-number">6379</span>,    },  },);</code></pre><p>整体来说，<strong>v9</strong>
+      版本的升级除了一些依赖版本有所改变以及加了一些新的特性之外，没有很大的改动，升级过程也非常平滑，所以就不针对之前的文章内容做出更改，而是单独出了一份升级
+      <strong>v9</strong> 的加餐章节。</p><p>当然你可以继续使用 <strong>v8</strong>
+      版本开发项目，只要锁定版本就行了，<strong>但我们后续的工程将使用 <strong>v9</strong>
+        版本开发，保持框架的所有依赖都是最新的</strong>，所以如果你的项目还没有正式投入使用，建议最好跟随一起升级到最新的版本。</p><p>如果你有什么疑问，欢迎在评论区提出或者加群沟通。
+      👏</p>
+
+  </body>
+</html>
